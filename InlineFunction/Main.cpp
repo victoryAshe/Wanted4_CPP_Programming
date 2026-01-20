@@ -13,9 +13,7 @@ int main()
 	int number = Square(10);
 
 	int* p = &number;
-	//delete(p);
-	//std::cout << p;
-	//std::cout << &p;
+
 
 	return 0;
 }
