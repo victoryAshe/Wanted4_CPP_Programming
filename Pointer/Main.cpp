@@ -29,7 +29,10 @@ int main()
 	int* p = DBG_NEW int;
 
 	// 동적 할당
-	//char* buffer = new char[10];
+	char* buffer = new char[10];
+	char** ptr = &buffer;
+
+	delete[] buffer;
 
 	void* pointer = new int;
 	DeletePointer(pointer);

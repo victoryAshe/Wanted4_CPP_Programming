@@ -1,6 +1,11 @@
 #include <iostream>
 #include <string>
+#include <Windows.h>
 
+#define MYTEXT(value) L##value
+#define MYTEST(value1, value2) value1##value2
+
+// class 내부에서 문자열 다루기
 class Player
 {
 	//CPP는 함수를 위에 놓고 변수를 아래에. C#과 JAVA는 반대로.
@@ -54,6 +59,14 @@ int main()
 
 	// 객체 기반으로 문자열 사용.
 	Player player("Ashe");
+
+	// wide-character.
+	const wchar_t* wideString1 = L"Hello wide string";
+	const wchar_t* wideString2 = TEXT("Hello wide string");
+	std::wcout << wideString2 << TEXT("\n");
+	
+	auto test = MYTEST(10, 20);
+	std::cout << test << "\n";
 
 	return 0;
 }
