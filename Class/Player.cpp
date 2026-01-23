@@ -9,7 +9,7 @@ Player::Player()
 Player::Player(const char* inName)
 	:x(0), y(0), speed(0)
 {
-	std::cout << "생성자가 호출되었습니다.\n";
+	//std::cout << "생성자가 호출되었습니다.\n";
 
 	// 동적 할당 및 문자열 복사.
 	// null문자 포함한 길이는 +1 해야함.strlen이 null문자 제외한 길이를 반환하기 때문.
@@ -24,7 +24,7 @@ Player::Player(const char* inName)
 // ==> UE에서는 자원 해제를 엔진에서 해줘서 할 필요 없음 그러나 신경쓰긴 해야함
 Player::~Player()
 {
-	std::cout << "소멸자가 호출되었습니다.\n";
+	//std::cout << "소멸자가 호출되었습니다.\n";
 
 	// null check
 	if (name)

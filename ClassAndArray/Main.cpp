@@ -26,11 +26,18 @@ public:
 	}
 };
 
-//// C-style에서 아래처럼 실행됨
-//void ShowName(Entity* entity)
-//{
-//	std::cout << "Entity.\n";
-//}
+// C-style에서 아래처럼 실행됨
+void ShowName(Entity* entity)
+{
+	std::cout << "Entity.\n";
+}
+
+void SafeDelete(Entity**& entity)
+{
+	delete entity;
+	entity = nullptr;
+}
+
 
 int main()
 {
@@ -54,17 +61,18 @@ int main()
 	//	entity.ShowName();
 	//}
 
-	//const int count = 5;
-	//Entity* entities[count] = {};
-	////memset(entities, 0, sizeof(Entity*) * count);
-	//
-	//for (int ix = 0; ix < count; ++ix)
-	//{
-	//	entities[ix] = new Entity();
-	//}
-	//
+	const int count = 5;
+	Entity* entities[count] = {};
+	//memset(entities, 0, sizeof(Entity*) * count);
+	
+	for (int ix = 0; ix < count; ++ix)
+	{
+		entities[ix] = new Entity();
+	}
+	
 	//for (Entity* entity : entities)
 	//{
+	//	//SafeDelete(entity);
 	//	delete entity;
 	//	entity = nullptr;
 	//}
@@ -73,7 +81,7 @@ int main()
 	Entity* entity = new Entity();
 	std::cout << entity << "\n";
 	std::cout << entity->GetSelf() << "\n";
-
+	
 	delete entity;
 
 	return 0;
