@@ -18,8 +18,9 @@ Entity::Entity(const Entity& other)
 	// 이렇게 복사하면 나중에 댕글링 포인터 문제 발생
 	// Dangling: 주인을 잃어버림.
 	// => 이미 삭제된 memory 주소에 접근.
-	//position = other.position;
+	position = other.position;
 
+	/*
 	// Deep copy 깊은 복사.
 	// 공간 확보
 	position = new Vector();
@@ -27,6 +28,7 @@ Entity::Entity(const Entity& other)
 	// 값 복사.
 	position->x = other.position->x;
 	position->y = other.position->y;
+	*/
 }
 
 Entity::~Entity()

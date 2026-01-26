@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Entity.h"
+#include "Entity/Entity.h"
 
 void TestFunction(Entity entity)
 {
