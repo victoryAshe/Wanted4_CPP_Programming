@@ -1,106 +1,62 @@
 #include <iostream>
+#include "FileIO.h"
+#include "Player.h"
+#include <vector>
 
-// C-Style IO 실습.
-// File*: void*
-// file을 다룰 수 있도록 하는 pointer로, file 그 자체는 아님.
-
-const char* FILE_NAME = "Test.txt";
-const char* READ_MODE = "rt"; //rt: read-text mode.
-const char* WRITE_MODE = "wt"; //wt: write-text mode.
-
-FILE* OpenFile(const char* MODE)
-{
-	FILE* file = nullptr;
-	fopen_s(&file, FILE_NAME, MODE); 
-	//fopen_s(&file, "Main.cpp", "rt"); // => cpp 파일도 열 수 있다~! 아무거나 가능.
-	return file;
-}
-
-void CloseFile(FILE* file)
-{
-	fclose(file);
-	file = nullptr;
-}
-
-// Read File.
-void ReadFile()
-{
-	FILE* file = OpenFile(READ_MODE);
-
-	// Failed to read file.
-	if (file == nullptr)
-	{
-		std::cout << "Failed to read file.\n";
-		__debugbreak();
-	}
-
-	// Read file.
-	char data[1024] = {};
-	while (true)
-	{
-		// if file has no more data: break
-		if (fgets(data, 1024, file) == nullptr)
-		{
-			break;
-		}
-	
-		std::cout << data;
-	}
-	std::cout << "\n";
-
-	CloseFile(file);
-}
-
-// File 크기 가늠해보기.
-size_t FileSize(FILE*& file)
-{
-	// File Size를 가늠해보기
-	fseek(file, 0, SEEK_END);
-	size_t fileSize = ftell(file);
-
-	std::cout << "FileSize: " << fileSize << "\n";
-
-	// ! File Size 가늠해본 뒤에, 다시 처음부터 읽으려면 FP 되돌려야 함.
-	//fseek(file, 0, SEEK_SET);
-	rewind(file); // 위의 줄과 기능은 같다.
-	
-	return fileSize;
-}
-
-// Read by block.
-void ReadByBlock()
-{
-	FILE* file = OpenFile(READ_MODE);
-	size_t fileSize = FileSize(file);
-
-	// space to save read data
-	//char buffer[1024] = {};
-	char* buffer = new char[fileSize + 1];
-	size_t readSize = fread(buffer, sizeof(char), fileSize + 1, file);
-
-	std::cout << "readSize: " << readSize << "\n";
-	std::cout << buffer;
-	delete[] buffer;
-
-	CloseFile(file);
-}
-
-void WriteFile(const char* message)
-{
-	FILE* file = OpenFile(WRITE_MODE);
-
-	fputs(message, file);
-
-	CloseFile(file);
-}
 
 int main()
 {
-	ReadFile();
+	// STL 잠시 짚고 넘어가기.
+	// Emplace_back은 R-value를 더 잘 지원하던 함수. (Move::이동 시맨틱 지원)
+	// 최신 compiler에서는 push_back도 해당 내용을 지원하지만, 위 함수를 쓰는 것이 좋다.
+	std::vector<int> array;
+	array.push_back(10);
+	array.emplace_back(10);
 
-	ReadByBlock();
+	//FileIO* fileIO = new FileIO();
+	//
+	//fileIO->ReadFile();
+	//
+	//fileIO->ReadByBlock();
+	//
+	//fileIO->WriteFile("String written from program.");
 
-	WriteFile("String written from program.");
+	// File Serialize: 객체를 File에 쓰기.
+	//Player player(3, 200, 30.0f);
+	//player.Serialize("PlayerData.txt");
 
+	// File Deserialize.
+	//Player player;
+	//player.Deserialize("PlayerData.txt");
+
+	// 문자열 입출력.
+	int score = 100;
+	float pi = 3.141592f;
+
+	// buffer에 해당 값을 입력
+	char formatString[256] = {};
+	sprintf_s(
+		formatString,
+		256,
+		"score=%d pi=%f\n",
+		score,
+		pi
+	);
+
+	// buffer에서 해당 값을 읽기
+	int intValue = 0;
+	float floatValue = 0.0f;
+	sscanf_s(
+		formatString,
+		"score=%d pi=%f\n",
+		&intValue,
+		&floatValue
+	);
+
+	// buffer의 값을 출력
+	puts(formatString);
+	std::cout << intValue << ", " << floatValue << "\n";
+
+	
 	return 0;
 }
