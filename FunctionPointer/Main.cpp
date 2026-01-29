@@ -44,6 +44,7 @@ int main()
 	//FunctionPointer = Function;
 
 	// Function Pointer를 사용한 Call back (간접 호출).
+	Operator oper;
 	//std::cout << FunctionPointer() << "\n";
 	std::cout << Function(10, 20, Add) << "\n";
 
