@@ -1,3 +1,5 @@
+// FunctionPointer.
+/*
 #include <iostream>
 #include <functional>
 
@@ -49,4 +51,71 @@ int main()
 	std::cout << Function(10, 20, Add) << "\n";
 
 	return 0;
+}
+*/
+
+
+// Functor과 Lambda 실습.
+#include <vector>
+#include <iostream>
+#include <algorithm>
+class Greater
+{
+public:
+	// 호출 연산자 overloading.
+	bool operator()(int a, int b)
+	{
+		return a > b;
+	}
+
+private:
+	// 아래에 기능을 추가하면 상태도 추가로 관리 가능.
+};
+
+int main()
+{
+	std::vector<int> array = {1,2,3,4,5,6,7,8,9,10};
+
+	// Functor instance.
+	//Greater greater;
+
+	// sort using functor.
+	//std::sort(array.begin(), array.end(), greater);
+
+	// sort using lambda.
+	std::sort(
+		array.begin(),
+		array.end(),
+		[](int a, int b)->bool
+		{
+			return a > b;
+		}
+	);
+
+	// sort result 출력.
+	for (const auto item : array)
+	{
+		std::cout << item << " ";
+	}
+	std::cout << "\n";
+
+
+	// lambda 선언: 무조건 auto로 해야 함!
+	auto greater = [](int a, int b)->bool
+		{
+			return a > b;
+		};
+
+	int num1 = 10, num2 = 5;
+	bool result = greater(num1, num2);
+
+	// Example. Using lambda_capture
+	//auto test = []() {};
+	int sum = 0;
+	std::for_each(
+		array.begin(),
+		array.end(),
+		[&sum](int item){ sum += item; }
+	);
+	std::cout << "Sum = " << sum <<"\n";
 }
